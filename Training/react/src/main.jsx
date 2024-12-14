@@ -15,9 +15,9 @@ const notes = [
     {
       id: 3,
       content: 'GET and POST are the most important methods of HTTP protocol',
-    
+      important: true
     }
 ]
    
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App notes={notes}/>)
+ReactDOM.createRoot(document.getElementById('root')).render(<App data={notes}/>)
