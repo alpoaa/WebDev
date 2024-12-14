@@ -1,10 +1,26 @@
-import { useState } from 'react'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 import Note from './components/Note'
 
-const App = ({ data }) => {
-  const [notes, setNotes]     = useState(data)
+const App = () => {
+  const [notes, setNotes]     = useState([])
   const [newNote, setNewNote] = useState('a new note')
   const [showAll, setShowAll] = useState(true)
+
+  //By default effect hook will be performed after when the component has been rendered
+  //When using 2nd parameter as empty array, it will be used only once (when getting the base data)
+  useEffect(() => {
+     console.log('effect')
+     axios
+     .get('http://localhost:3001/notes')
+     .then(response => {
+       const data = response.data
+       console.log(data)
+       setNotes(data)
+     })
+  }, [])
+
+  console.log('render', notes.length, 'notes')
 
   const addNote = (event) => {
     event.preventDefault()

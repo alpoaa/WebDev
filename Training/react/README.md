@@ -13,3 +13,13 @@ cd [project]
 npm install
 npm run dev
 
+
+JSON- server use:
+Place the correct json file to folder root & go to correct folder with cmd
+npx json-server --port=3001 --watch db.json
+Add it as development dependecy:
+npm install json-server --save-dev
+
+Axios install:
+(1) install using npm -> go root of project (where is package.json) and perform command on cmd: npm install axios
+(2) install it by adding necessary packages straight to package.json file
