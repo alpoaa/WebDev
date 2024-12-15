@@ -13,6 +13,9 @@ cd [project]
 npm install
 npm run dev
 
+Effect hooks:
+By default effect hook will be performed after when the component has been rendered
+When using 2nd parameter as empty array, it will be used only once (when getting the base data)
 
 JSON- server use:
 Place the correct json file to folder root & go to correct folder with cmd
