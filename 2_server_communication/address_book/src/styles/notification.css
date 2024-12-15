@@ -1,0 +1,19 @@
+.info {
+    color: rgba(11, 88, 36, 0.827);
+    border-style: solid;
+    border-radius: 20px;
+    border-color: rgb(10, 205, 104);
+    background-color: rgba(52, 185, 52, 0.438);
+    text-align: center;
+    margin: 2%;
+}
+
+.error {
+    color: rgba(224, 10, 10, 0.827);
+    border-style: solid;
+    border-radius: 20px;
+    border-color: rgb(137, 13, 4);
+    background-color: rgba(233, 48, 35, 0.438);
+    text-align: center;
+    margin: 2%;
+}

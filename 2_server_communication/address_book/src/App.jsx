@@ -9,6 +9,7 @@ import Header from './components/Header'
 import Numbers from './components/Numbers'
 import Filter from './components/Filter'
 import AddForm from './components/AddForm'
+import Notification from './components/Notification'
 
 
 const App = () => {
@@ -16,6 +17,8 @@ const App = () => {
   const [newName, setNewName]     = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter]       = useState('')
+  const [message, setMessage]     = useState('')
+  const [messageType, setMessageType] = useState('')
 
   useEffect(() => {
     personService
@@ -42,6 +45,10 @@ const App = () => {
         .then(updatedPerson => {
           setPersons(persons.map(person => person.name !== newPerson.name ? person : updatedPerson))
         })
+        .catch(error => {
+          setNotification(`${newPerson.name} was already removed from server`, 'error')
+          setPersons(persons.filter(person => person.name !== newPerson.name))
+        })
       }
     } 
     else {
@@ -54,6 +61,7 @@ const App = () => {
       .create(newNumberObj)
       .then(createdObj => {
         setPersons(persons.concat(createdObj))
+        setNotification(`${createdObj.name} created!`, 'info')
       })
       
     }
@@ -83,9 +91,20 @@ const App = () => {
 
   }
 
+  const setNotification = (notifMessage, notifType) => {
+    setMessage(notifMessage)
+    setMessageType(notifType)
+
+    setTimeout(() => {
+      setMessage('')
+      setMessageType('')
+    }, 2000)
+  }
+
   return (
     <>
     <Header text='Phonebook' />
+    <Notification message={message} type={messageType} />
     <Filter filter={filter} filterChangeAction={handleFilterChange}/>
     <Header text='Add new' />
     <AddForm 
