@@ -2,7 +2,7 @@
 import '../styles/notification.css'
 
 const Notification = ({ message }) => {
-    if (message == null) {
+    if (message === null) {
         return null
     }
 
