@@ -46,8 +46,12 @@ const App = () => {
           setPersons(persons.map(person => person.name !== newPerson.name ? person : updatedPerson))
         })
         .catch(error => {
-          setNotification(`${newPerson.name} was already removed from server`, 'error')
-          setPersons(persons.filter(person => person.name !== newPerson.name))
+          if (error.response.data.error) {
+            setNotification(error.response.data.error, 'error')
+          } else {
+            setNotification(`${newPerson.name} was already removed from server`, 'error')
+            setPersons(persons.filter(person => person.name !== newPerson.name))
+          }
         })
       }
     } 
@@ -63,7 +67,9 @@ const App = () => {
         setPersons(persons.concat(createdObj))
         setNotification(`${createdObj.name} created!`, 'info')
       })
-      
+      .catch(error => {
+        setNotification(error.response.data.error, 'error')
+      })
     }
 
     setNewName('')
