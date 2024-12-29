@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 if (process.argv.length < 3) {
-    console.log('give password as argument')
-    process.exit()
+  console.log('give password as argument')
+  process.exit()
 }
 
 const password = process.argv[2]
@@ -24,6 +24,7 @@ const note = new Note({
   important: true,
 })
 
+// eslint-disable-next-line no-unused-vars
 note.save().then(result => {
   console.log('note saved!')
   mongoose.connection.close()
