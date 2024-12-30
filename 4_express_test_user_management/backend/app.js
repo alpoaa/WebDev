@@ -13,18 +13,18 @@ mongoose.set('strictQuery', false)
 logger.info('connecting to:', config.MONGODB_URI)
 
 mongoose.connect(config.MONGODB_URI)
-.then(() => {
+  .then(() => {
     logger.info('connected to database')
-})
-.catch((error) => {
+  })
+  .catch((error) => {
     logger.error('error connecting to database:', error.message)
-})
+  })
 
 app.use(cors())
 app.use(express.json())
 
 morgan.token('body', (request) => {
-    return request.body ? JSON.stringify(request.body) : ''
+  return request.body ? JSON.stringify(request.body) : ''
 })
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
