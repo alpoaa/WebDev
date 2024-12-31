@@ -1,13 +1,14 @@
 const mongoose = require('mongoose')
 
-if (process.argv.length < 3) {
+if (process.argv.length < 4) {
   console.log('give password as argument')
   process.exit()
 }
 
-const password = process.argv[2]
+const user     = process.argv[2]
+const password = process.argv[3]
 
-const url = `mongodb+srv://${process.env.MONGO_DB_USER}:${password}@webdev.perkp.mongodb.net/noteapp?retryWrites=true&w=majority`
+const url = `mongodb+srv://${user}:${password}@webdev.perkp.mongodb.net/testnoteapp?retryWrites=true&w=majority`
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
@@ -20,7 +21,7 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note({
-  content: 'HTML is easy',
+  content: 'Testing the mongo',
   important: true,
 })
 
