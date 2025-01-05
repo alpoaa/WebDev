@@ -12,7 +12,15 @@ notesRouter.get('/', async(request, response) => {
   */
 })
 
-notesRouter.get('/:id', async(request, response, next) => {
+notesRouter.get('/:id', async(request, response) => {
+  const note = await Note.findById(request.params.id)
+  if (note) {
+    response.json(note)
+  } else {
+    response.status(404).end()
+  }
+  //try-catch & next not needed because of express-async-errors
+  /*
   try {
     const note = await Note.findById(request.params.id)
 
@@ -24,6 +32,7 @@ notesRouter.get('/:id', async(request, response, next) => {
   } catch (exception) {
     next(exception)
   }
+  */
   /*
   Note.findById(request.params.id)
     .then(note => {
@@ -37,7 +46,7 @@ notesRouter.get('/:id', async(request, response, next) => {
     */
 })
 
-notesRouter.post('/', async(request, response, next) => {
+notesRouter.post('/', async(request, response) => {
   const body = request.body
 
   const note = new Note({
@@ -45,12 +54,17 @@ notesRouter.post('/', async(request, response, next) => {
     important: body.important || false,
   })
 
+  const savedNote = await note.save()
+  response.status(201).json(savedNote)
+  //try-catch & next not needed because of express-async-errors
+  /*
   try {
     const savedNote = await note.save()
     response.status(201).json(savedNote)
   } catch (exception) {
     next(exception)
   }
+  */
   /*
   note.save()
     .then(savedNote => {
@@ -60,13 +74,18 @@ notesRouter.post('/', async(request, response, next) => {
   */
 })
 
-notesRouter.delete('/:id', async(request, response, next) => {
+notesRouter.delete('/:id', async(request, response) => {
+  await Note.findByIdAndDelete(request.params.id)
+  response.status(204).end()
+  //try-catch & next not needed because of express-async-errors
+  /*
   try {
     await Note.findByIdAndDelete(request.params.id)
     response.status(204).end()
   } catch (exception) {
     next(exception)
   }
+  */
   /*
   Note.findByIdAndDelete(request.params.id)
     .then(() => {
