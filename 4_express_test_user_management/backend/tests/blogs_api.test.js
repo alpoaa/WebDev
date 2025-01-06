@@ -89,6 +89,43 @@ describe('Tests when initializing data to test DB', () => {
         .expect(400)
     })
   })
+
+  describe('PUT', () => {
+    test('Update the likes will be updated into the database', async() => {
+      const testBlogs = await testHelper.blogsInDB()
+
+      let updateBlog   = testBlogs[0]
+      updateBlog.likes = updateBlog.likes + 1
+
+      await api
+        .put(`/api/blogs/${updateBlog.id}`)
+        .send(updateBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      const testBlogsUpdated = await testHelper.blogsInDB()
+      const testBlogUpdated  = testBlogsUpdated.find(blog => blog.id === updateBlog.id)
+
+      assert.strictEqual(testBlogUpdated.likes, updateBlog.likes)
+    })
+  })
+
+  describe('DELETE', () => {
+    test('Removing the blog will be removed from the database', async() => {
+      const testBlogs  = await testHelper.blogsInDB()
+      const blogDelete = testBlogs[0]
+
+      await api
+        .delete(`/api/blogs/${blogDelete.id}`)
+        .expect(204)
+
+      const testBlogsDeleted = await testHelper.blogsInDB()
+      assert.strictEqual(testBlogsDeleted.length, testHelper.initialBlogs.length - 1)
+
+      const testBlogsIds = testBlogsDeleted.map(blog => blog.id)
+      assert(!testBlogsIds.includes(blogDelete.id))
+    })
+  })
 })
 
 after(async() => {
