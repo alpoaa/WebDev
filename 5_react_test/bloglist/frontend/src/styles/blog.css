@@ -1,0 +1,33 @@
+.blog {
+    border-style: solid;
+    border-color: rgb(49, 104, 244);
+    margin: 5px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.blog button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #d9422e;
+    border: none;
+    border-radius: 10px;
+}
+
+.blog button:hover {
+    background-color: rgba(251, 165, 73, 0.753);
+
+}
+
+.blog button:active {
+    background-color: #d26935;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

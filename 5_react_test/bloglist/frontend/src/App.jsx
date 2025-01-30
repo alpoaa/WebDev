@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 //Services
 import blogService from './services/blogs'
@@ -11,6 +11,7 @@ import LoginForm from './components/LoginForm'
 import LogoutForm from './components/LogoutForm'
 import CreateBlogForm from './components/CreateBlogForm'
 import Blogs from './components/Blogs'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs]                 = useState([])
@@ -19,11 +20,8 @@ const App = () => {
   const [loginUser, setLoginUser]         = useState(null)
   const [notifMessage, setNotifMessage]   = useState('')
   const [notifType, setNotifType]         = useState('')
-  
-  //Create blog
-  const [createBlogTitle, setCreateBlogTitle]   = useState('')
-  const [createBlogAuthor, setCreateBlogAuthor] = useState('')
-  const [createBlogUrl, setCreateBlogUrl]       = useState('')
+
+  const blogRef = useRef()
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
@@ -90,33 +88,42 @@ const App = () => {
   }
 
   //Create blog
-  const handleChangeCreateBlogTitle = ({ target }) => setCreateBlogTitle(target.value)
-  const handleChangeCreateBlogAuthor = ({ target }) => setCreateBlogAuthor(target.value)
-  const handleChangeCreateBlogUrl = ({ target }) => setCreateBlogUrl(target.value)
-  const handleCreateBlog = async (event) => {
-    event.preventDefault()
+  const createBlog = async (newBlogObj) => {
+    blogRef.current.toggleVisibility()
 
     try {
-      const newBlog = {
-        title: createBlogTitle,
-        author: createBlogAuthor,
-        url: createBlogUrl
-      }
-  
-      const createdBlog = await blogService.createBlog(newBlog)
+      const createdBlog = await blogService.createBlog(newBlogObj)
       
       if (createdBlog) {
         setBlogs(blogs.concat(createdBlog))
       }
-  
-      setCreateBlogTitle('')
-      setCreateBlogAuthor('')
-      setCreateBlogUrl('')
-      sendNotification(`Created blog: ${newBlog.title} by ${newBlog.author}`, 'info')
+      
+      sendNotification(`Created blog: ${newBlogObj.title} by ${newBlogObj.author}`, 'info')
     } catch (exception) {
       setLoginUser(null)
       blogService.setToken(null)
       sendNotification(exception.response.data.error, 'error')
+    }
+  }
+
+  //Like blog
+  const likeBlog = async (updatedBlogObj, blogId) => {
+    try {
+      const updatedBlog = await blogService.updateBlog(updatedBlogObj, blogId)
+      const newBlogs    = blogs.map(blog => blog.id === blogId ? { ...blog, likes: updatedBlog.likes } : blog)
+      setBlogs(newBlogs)
+    } catch (exception) {
+      sendNotification(exception.response.data.error, 'error')
+    }
+  }
+
+  //Delete blog
+  const deleteBlog = async (deleteBlog) => {
+    try {
+      await blogService.deleteBlog(deleteBlog.id)
+      setBlogs(blogs.filter(blog => blog.id !== deleteBlog.id))
+    } catch (exception) {
+      sendNotification(exception.response.error.data, 'error')
     }
   }
 
@@ -133,17 +140,13 @@ const App = () => {
         handleLoginSubmit={handleLogin}/>
 
       <LogoutForm loginUser={loginUser} handleLogoutClick={handleLogoutClick} />
-      <CreateBlogForm 
-        loginUser={loginUser}
-        handleCreateBlog={handleCreateBlog}
-        title={createBlogTitle}
-        author={createBlogAuthor}
-        url={createBlogUrl}
-        handleChangeTitle={handleChangeCreateBlogTitle}
-        handleChangeAuthor={handleChangeCreateBlogAuthor}
-        handleChangeUrl={handleChangeCreateBlogUrl} />
+      <Togglable user={loginUser} buttonLabel='Create blog' ref={blogRef}>
+        <CreateBlogForm 
+          loginUser={loginUser}
+          createBlog={createBlog} />
+      </Togglable>
 
-      <Blogs loginUser={loginUser} blogs={blogs} handleLogoutClick={handleLogoutClick} />
+      <Blogs loginUser={loginUser} blogs={blogs} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
       
     </>
   )

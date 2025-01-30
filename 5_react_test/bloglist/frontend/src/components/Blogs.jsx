@@ -2,7 +2,7 @@
 import Blog from './Blog'
 import Header from './Header'
 
-const Blogs = ({ loginUser, blogs }) => {
+const Blogs = ({ loginUser, blogs, likeBlog, deleteBlog }) => {
     if (loginUser === null) {
         return null
     }
@@ -10,7 +10,9 @@ const Blogs = ({ loginUser, blogs }) => {
     return (
         <>
             <Header text='Blogs' />
-            {blogs.map(blog => <Blog key={blog.id} blog={blog} /> )}
+            {blogs
+                .sort((next, prev) => next.likes > prev.likes ? -1 : 0)
+                .map(blog => <Blog key={blog.id} loginUser={loginUser} blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog} /> )}
         </>
     )
 }

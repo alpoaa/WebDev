@@ -1,8 +1,50 @@
 /* eslint-disable react/prop-types */
-const Blog = ({ blog }) => (
-    <>
-        <p>{blog.title} {blog.author}</p>
-    </>
-)
+import { useState } from 'react'
+import '../styles/blog.css'
+
+const Blog = ({ loginUser, blog, likeBlog, deleteBlog }) => {
+    const [viewAll, setViewAll] = useState(false)
+
+    const handleClickView = () => setViewAll(!viewAll)
+    const handleClickLike = () => {
+        const updatedBlogObj = {
+            title: blog.title,
+            author: blog.author,
+            url: blog.url,
+            likes: blog.likes + 1
+        }
+
+        likeBlog(updatedBlogObj, blog.id)
+    }
+    const handleClickDelete = () => {
+        if (window.confirm(`Delete blog ${blog.title} by author ${blog.author}`)) {
+            deleteBlog(blog)
+        }
+    }
+
+    const showDeleteButton = { display: blog.user.username === loginUser.username ? '' : 'none' }
+
+    return (
+        <>
+        {!viewAll && 
+            <div className='blog blogSimple'>
+                <p>{blog.author} - {blog.title}</p>
+                <button onClick={handleClickView}>{viewAll ? 'Hide' : 'View'}</button>
+            </div>
+        }
+        {viewAll && 
+            <div className='blog blogAll'>
+                <p>Created by {blog.user.name}</p>
+                <p>{blog.author} - {blog.title}</p>
+                <p>{blog.url}</p>
+                <p>Likes: {blog.likes}</p>
+                <button onClick={handleClickLike}>Like</button>
+                <button onClick={handleClickView}>{viewAll ? 'Hide' : 'View'}</button>
+                <button style={showDeleteButton} onClick={handleClickDelete}>Delete</button>
+            </div>
+        }
+        </>
+    )
+}
 
 export default Blog
