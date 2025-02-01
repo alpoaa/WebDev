@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'build', 'vite.config.js'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -33,6 +33,14 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'eqeqeq': 'error',
+      'no-trailing-spaces': 'error',
+      'object-curly-spacing': [
+        'error', 'always'
+      ],
+      'arrow-spacing': [
+        'error', { 'before': true, 'after': true },
+      ]
     },
   },
 ]

@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types'
 import Header from './Header'
+
 const LoginForm = ({ loginUser, username, password, handleChangeUsername, handleChangePassword, handleLoginSubmit }) => {
     if (loginUser !== null) {
         return null
@@ -22,6 +23,19 @@ const LoginForm = ({ loginUser, username, password, handleChangeUsername, handle
         </form>
         </>
     )
+}
+
+LoginForm.propTypes = {
+    loginUser: PropTypes.exact({
+        token: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    }),
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    handleChangeUsername: PropTypes.func.isRequired,
+    handleChangePassword: PropTypes.func.isRequired,
+    handleLoginSubmit: PropTypes.func.isRequired
 }
 
 export default LoginForm

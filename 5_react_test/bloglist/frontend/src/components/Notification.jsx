@@ -5,7 +5,7 @@ const Notification = ({ message, notifType }) => {
     if (message === '') {
         return null
     }
-    
+
     return (
         <div className={notifType}>
             <p>{message}</p>

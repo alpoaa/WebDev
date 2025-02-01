@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 import '../styles/blog.css'
 
 const Blog = ({ loginUser, blog, likeBlog, deleteBlog }) => {
@@ -26,13 +26,13 @@ const Blog = ({ loginUser, blog, likeBlog, deleteBlog }) => {
 
     return (
         <>
-        {!viewAll && 
+        {!viewAll &&
             <div className='blog blogSimple'>
                 <p>{blog.author} - {blog.title}</p>
                 <button onClick={handleClickView}>{viewAll ? 'Hide' : 'View'}</button>
             </div>
         }
-        {viewAll && 
+        {viewAll &&
             <div className='blog blogAll'>
                 <p>Created by {blog.user.name}</p>
                 <p>{blog.author} - {blog.title}</p>
@@ -45,6 +45,17 @@ const Blog = ({ loginUser, blog, likeBlog, deleteBlog }) => {
         }
         </>
     )
+}
+
+Blog.propTypes = {
+    loginUser: PropTypes.exact({
+        token: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    }),
+    blog: PropTypes.object.isRequired,
+    likeBlog: PropTypes.func.isRequired,
+    deleteBlog: PropTypes.func.isRequired
 }
 
 export default Blog

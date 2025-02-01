@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import Header from './Header'
 
@@ -22,7 +22,7 @@ const CreateBlogForm = ({ loginUser, createBlog }) => {
         setAuthor('')
         setUrl('')
     }
-    
+
     if (loginUser === null) {
         return null
     }
@@ -44,6 +44,15 @@ const CreateBlogForm = ({ loginUser, createBlog }) => {
             </form>
         </>
     )
+}
+
+CreateBlogForm.propTypes = {
+    loginUser: PropTypes.exact({
+        token: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    }),
+    createBlog: PropTypes.func.isRequired
 }
 
 export default CreateBlogForm

@@ -53,7 +53,7 @@ const App = () => {
 
   //Login
   const handleChangeUsername = ({ target }) => setLoginUsername(target.value)
-  const handleChangePassword = ({ target}) => setLoginPassword(target.value)
+  const handleChangePassword = ({ target }) => setLoginPassword(target.value)
   const handleLogin = async(event) => {
     event.preventDefault()
 
@@ -93,11 +93,11 @@ const App = () => {
 
     try {
       const createdBlog = await blogService.createBlog(newBlogObj)
-      
+
       if (createdBlog) {
         setBlogs(blogs.concat(createdBlog))
       }
-      
+
       sendNotification(`Created blog: ${newBlogObj.title} by ${newBlogObj.author}`, 'info')
     } catch (exception) {
       setLoginUser(null)
@@ -131,7 +131,7 @@ const App = () => {
   return (
     <>
       <Notification message={notifMessage} notifType={notifType} />
-      <LoginForm 
+      <LoginForm
         loginUser={loginUser}
         username={loginUsername}
         password={loginPassword}
@@ -141,13 +141,13 @@ const App = () => {
 
       <LogoutForm loginUser={loginUser} handleLogoutClick={handleLogoutClick} />
       <Togglable user={loginUser} buttonLabel='Create blog' ref={blogRef}>
-        <CreateBlogForm 
+        <CreateBlogForm
           loginUser={loginUser}
           createBlog={createBlog} />
       </Togglable>
 
       <Blogs loginUser={loginUser} blogs={blogs} likeBlog={likeBlog} deleteBlog={deleteBlog}/>
-      
+
     </>
   )
 }

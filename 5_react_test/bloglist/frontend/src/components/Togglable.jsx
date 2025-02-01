@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types'
 import { useState, useImperativeHandle, forwardRef } from 'react'
 
 const Togglable = forwardRef((props, ref) => {
@@ -36,5 +36,14 @@ const Togglable = forwardRef((props, ref) => {
 })
 
 Togglable.displayName = 'Togglable'
+Togglable.propTypes   = {
+  buttonLabel: PropTypes.string.isRequired,
+  user: PropTypes.exact({
+    token: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+}),
+  children: PropTypes.element.isRequired
+}
 
 export default Togglable
