@@ -1,0 +1,21 @@
+{
+  "name": "tests",
+  "version": "0.0.1",
+  "description": "e2e tests for bloglist using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report",
+    "test:ui": "npm run test -- --ui",
+    "test:trace": "npm run test -- --trace on"
+  },
+  "author": "alpoaa",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.1"
+  }
+}

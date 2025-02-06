@@ -95,7 +95,9 @@ const App = () => {
       const createdBlog = await blogService.createBlog(newBlogObj)
 
       if (createdBlog) {
-        setBlogs(blogs.concat(createdBlog))
+        //setBlogs(blogs.concat(createdBlog))
+        const allBlogs = await blogService.getAll()
+        setBlogs(allBlogs)
       }
 
       sendNotification(`Created blog: ${newBlogObj.title} by ${newBlogObj.author}`, 'info')
@@ -122,6 +124,7 @@ const App = () => {
     try {
       await blogService.deleteBlog(deleteBlog.id)
       setBlogs(blogs.filter(blog => blog.id !== deleteBlog.id))
+      sendNotification(`Successfully deleted blog ${deleteBlog.title}`, 'info')
     } catch (exception) {
       sendNotification(exception.response.error.data, 'error')
     }

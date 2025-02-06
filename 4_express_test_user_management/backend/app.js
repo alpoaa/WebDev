@@ -37,6 +37,11 @@ app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/blogs', middleware.requestExtractorUser, blogsRouter) //token extractor middleware needs to be before user extractor
 
+if (process.env.NODE_ENV === 'test') {
+  const testRouter = require('./controllers/tests')
+  app.use('/api/testing', testRouter)
+}
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 

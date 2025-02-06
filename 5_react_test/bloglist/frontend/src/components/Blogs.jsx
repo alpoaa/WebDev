@@ -8,12 +8,12 @@ const Blogs = ({ loginUser, blogs, likeBlog, deleteBlog }) => {
     }
 
     return (
-        <>
+        <div data-testid="blogs">
             <Header text='Blogs' />
             {blogs
                 .sort((next, prev) => next.likes > prev.likes ? -1 : 0)
                 .map(blog => <Blog key={blog.id} loginUser={loginUser} blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog} /> )}
-        </>
+        </div>
     )
 }
 
