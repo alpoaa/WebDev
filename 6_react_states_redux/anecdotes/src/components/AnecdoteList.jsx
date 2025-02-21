@@ -3,7 +3,14 @@ import { useSelector } from 'react-redux'
 import Anecdote from './Anecdote'
 
 const AnecdoteList = () => {
-    const anecdotes = useSelector(state => state)
+    //const anecdotes = useSelector(state => state.anecdotes)
+    const anecdotes = useSelector(({ anecdotes, filter }) => {
+        if (!filter) {
+            return anecdotes
+        }
+
+        return anecdotes.filter(anec => anec.content.toLowerCase().includes(filter.toLowerCase()))
+    })
 
     return (
         <div>
