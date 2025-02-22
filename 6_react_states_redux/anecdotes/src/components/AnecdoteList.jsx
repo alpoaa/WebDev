@@ -12,13 +12,14 @@ const AnecdoteList = () => {
         return anecdotes.filter(anec => anec.content.toLowerCase().includes(filter.toLowerCase()))
     })
 
+    const anecdotesCopy = [...anecdotes]
+
     return (
         <div>
-            {anecdotes
-            .sort((cur, prev) => prev.votes - cur.votes)
+            {anecdotesCopy
+            .sort((cur, prev) => prev.votes - cur.votes)          
             .map(anecdote =>
-                <Anecdote key={anecdote.id} anecdote={anecdote} />
-            )}
+                <Anecdote key={anecdote.id} anecdote={anecdote} />)}
         </div>
     )
 }
