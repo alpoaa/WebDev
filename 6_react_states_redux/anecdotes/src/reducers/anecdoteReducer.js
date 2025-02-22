@@ -1,5 +1,68 @@
 import { createSlice } from '@reduxjs/toolkit'
+import anecdoteService from '../services/anecdotes'
 
+const anecdoteSlice = createSlice({
+    name: 'anecdotes',
+    initialState: [],
+    reducers: {
+        /*
+        anecdoteCreate(state, action) {
+            state.push(action.payload)
+        },
+        */
+       /*
+        anecdoteVote(state, action) {
+            const id = action.payload.id
+            const anecdoteVote = state.find(anecdote => anecdote.id === id)
+            const updatedAnecdote = {
+                ...anecdoteVote,
+                votes: anecdoteVote.votes + 1
+            }
+
+            return state.map(anecdote => anecdote.id !== id ? anecdote : updatedAnecdote)
+        },
+        */
+        anecdoteUpdate(state, action) {
+            const updatedAnecdote =  action.payload
+            return state.map(anecdote => anecdote.id !== updatedAnecdote.id ? anecdote : updatedAnecdote)
+        },
+        anecdoteSet(state, action) {
+            return action.payload
+        },
+        anecdoteAdd(state, action) {
+            state.push(action.payload)
+        }
+    }
+})
+
+export const anecdotesInit = () => {
+    return async dispatch => {
+        const anecdotes = await anecdoteService.getAll()
+        dispatch(anecdoteSet(anecdotes))
+    }
+}
+
+export const anecdoteCreate = anecdote => {
+    return async dispatch => {
+        const newAnecdote = await anecdoteService.create(anecdote)
+        dispatch(anecdoteAdd(newAnecdote))
+    }
+}
+
+export const anecdoteVote = id => {
+    return async dispatch => {
+        const anecdote = await anecdoteService.getAnecdote(id)
+        const updateAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
+        const updatedAnecdote = await anecdoteService.update(updateAnecdote)
+        dispatch(anecdoteUpdate(updatedAnecdote))
+    }
+}
+
+
+export const { anecdoteSet, anecdoteAdd, anecdoteUpdate } = anecdoteSlice.actions
+export default anecdoteSlice.reducer
+
+/*
 const anecdotesInit = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -21,33 +84,6 @@ const anecdoteAsObject = (anecdote) => {
 
 const initialState = anecdotesInit.map(anecdoteAsObject)
 
-const anecdoteSlice = createSlice({
-    name: 'anecdotes',
-    initialState: initialState,
-    reducers: {
-        anecdoteCreate(state, action) {
-            state.push(action.payload)
-        },
-        anecdoteVote(state, action) {
-            const id = action.payload
-            const anecdoteVote = state.find(anecdote => anecdote.id === id)
-            const updatedAnecdote = {
-                ...anecdoteVote,
-                votes: anecdoteVote.votes + 1
-            }
-
-            return state.map(anecdote => anecdote.id !== id ? anecdote : updatedAnecdote)
-        },
-        anecdoteSet(state, action) {
-            return action.payload
-        }
-    }
-})
-
-export const { anecdoteCreate, anecdoteVote, anecdoteSet } = anecdoteSlice.actions
-export default anecdoteSlice.reducer
-
-/*
 const reducer = (state = initialState, action) => {
     console.log('state now:', state)
     console.log('action:', action)

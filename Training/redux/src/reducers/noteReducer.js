@@ -1,35 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = [
-    {
-        content: 'reducer defines how redux store works',
-        important: true,
-        id: 1,
-    },
-    {
-        content: 'state of store can contain any data',
-        important: false,
-        id: 2,
-    }
-]
-
-const generateId = () => Number((Math.random() * 100000).toFixed(0))
+import noteService from '../services/notes'
 
 const noteSlice = createSlice({
     name: 'notes',
     initialState: [],
     reducers: {
+      /*
       createNote(state, action) {
-        //service takes care of correct creation
-        /*
-        const newNote = {
-            content: action.payload,
-            important: false,
-            //id: generateId()
-        }
-        */
         state.push(action.payload)
       },
+      */
       toggleImportanceOf(state, action) {
         const id = action.payload
         const noteToChange = state.find(n => n.id === id)
@@ -49,10 +29,39 @@ const noteSlice = createSlice({
       }
     }
   })
+
+  export const initiliazeNotes = () => {
+    return async dispatch => {
+      const notes = await noteService.getAll()
+      dispatch(setNotes(notes))
+    }
+  }
+
+  export const createNote = content => {
+    return async dispatch => {
+      const newNote = await noteService.createNew(content)
+      dispatch(appendNote(newNote))
+    }
+  }
   
-  export const { createNote, toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
+  export const { toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
   export default noteSlice.reducer
 /*
+const initialState = [
+    {
+        content: 'reducer defines how redux store works',
+        important: true,
+        id: 1,
+    },
+    {
+        content: 'state of store can contain any data',
+        important: false,
+        id: 2,
+    }
+]
+
+const generateId = () => Number((Math.random() * 100000).toFixed(0))
+
 const noteReducer = (state = initialState, action) => {
     switch(action.type) {
         case 'NEW_NOTE':

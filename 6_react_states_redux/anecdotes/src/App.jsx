@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-
-import { anecdoteSet } from './reducers/anecdoteReducer'
-import anecdoteService from './services/anecdotes'
+import { anecdotesInit } from './reducers/anecdoteReducer'
 
 import Notification from './components/Notification'
 import Header from './components/Header'
@@ -14,9 +12,8 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    anecdoteService.getAll()
-      .then(anecdotes => dispatch(anecdoteSet(anecdotes)))
-  }, [])
+    dispatch(anecdotesInit())
+  }, [dispatch])
 
   return (
     <div>
