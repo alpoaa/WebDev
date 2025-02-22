@@ -1,23 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getAnecdotes, createAnecdote, updateAnecdote } from './services/requests'
+import { useQuery } from '@tanstack/react-query'
+import { getAnecdotes } from './services/requests'
+import { NotificationContextProvider } from './NotificationContext'
 
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
+import Anecdote from './components/Anecdote'
 
 const App = () => {
-  const queryClient = useQueryClient()
-
-  const voteAnecdoteMutation = useMutation({
-    mutationFn: updateAnecdote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
-    }
-  })
-
-  const handleVote = (anecdote) => {
-    voteAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
-  }
 
   const result = useQuery({
     queryKey: ['anecdotes'],
@@ -34,22 +24,16 @@ const App = () => {
 
   return (
     <div>
-      <h3>Anecdote app</h3>
-    
-      <Notification />
-      <AnecdoteForm />
-    
-      {anecdotes.map(anecdote =>
-        <div key={anecdote.id}>
-          <div>
-            {anecdote.content}
-          </div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote)}>vote</button>
-          </div>
-        </div>
-      )}
+      <NotificationContextProvider>
+        <h3>Anecdote app</h3>
+      
+        <Notification />
+        <AnecdoteForm />
+      
+        {anecdotes.map(anecdote =>
+          <Anecdote key={anecdote.id} anecdote={anecdote} />
+        )}
+      </NotificationContextProvider>
     </div>
   )
 }

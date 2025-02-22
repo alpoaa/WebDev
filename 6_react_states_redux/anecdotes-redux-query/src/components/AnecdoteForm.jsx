@@ -1,15 +1,21 @@
 /* eslint-disable no-unused-vars */
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getAnecdotes, createAnecdote, updateAnecdote } from '../services/requests'
+import { useNotification } from '../NotificationContext'
 
 const AnecdoteForm = () => {
   const queryClient = useQueryClient()
+  const { dispatch } = useNotification()
 
   const newAnecdoteMutation = useMutation({
     mutationFn: createAnecdote,
-    onSuccess: () => {
+    onError: () => {
+      dispatch({ type: 'SHOW', payload: 'Too short anecdote, must have length 5 or more'})
+    },
+    onSuccess: (anecdote) => {
       queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
-    }
+      dispatch({ type: 'SHOW', payload: `Added anecdote: ${anecdote.content}` })
+    },
   })
 
   const onCreate = (event) => {
@@ -18,6 +24,7 @@ const AnecdoteForm = () => {
     event.target.anecdote.value = ''
     
     newAnecdoteMutation.mutate({ content, votes: 0 })
+    
   }
   
     return (
