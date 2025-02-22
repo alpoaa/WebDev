@@ -5,10 +5,11 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
 import App from './App'
-import noteReducer from './reducers/noteReducer'
+import noteReducer, { setNotes } from './reducers/noteReducer'
 import filterReducer from './reducers/filterReducer'
 import { createNote } from './reducers/noteReducer'
 import { filterChange } from './reducers/filterReducer'
+import noteService from './services/notes'
 
 /*
 const reducers = combineReducers({
@@ -24,6 +25,12 @@ const store = configureStore({
     filter: filterReducer
   }
 })
+/*
+noteService.getAll()
+.then(notes => {
+  store.dispatch(setNotes(notes))
+})
+*/
 /*
 store.subscribe(() => console.log(store.getState()))
 store.dispatch(filterChange('IMPORTANT'))

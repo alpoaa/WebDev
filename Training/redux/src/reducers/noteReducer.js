@@ -17,15 +17,18 @@ const generateId = () => Number((Math.random() * 100000).toFixed(0))
 
 const noteSlice = createSlice({
     name: 'notes',
-    initialState: initialState,
+    initialState: [],
     reducers: {
       createNote(state, action) {
+        //service takes care of correct creation
+        /*
         const newNote = {
             content: action.payload,
             important: false,
-            id: generateId()
+            //id: generateId()
         }
-        state.push(newNote)
+        */
+        state.push(action.payload)
       },
       toggleImportanceOf(state, action) {
         const id = action.payload
