@@ -60,7 +60,7 @@ const App = () => {
       <Routes>
         <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdote} />} />
         <Route path='/' element={ <AnecdoteList anecdotes={anecdotes} /> }/>
-        <Route path='/create' element={createRedirect ? <Navigate to='/' /> : <AnecdoteCreate creteNew={addNew}/> } />
+        <Route path='/create' element={createRedirect ? <Navigate to='/' /> : <AnecdoteCreate createNew={addNew}/> } />
         <Route path='/about' element={<About />} />
       </Routes>
       <Footer />

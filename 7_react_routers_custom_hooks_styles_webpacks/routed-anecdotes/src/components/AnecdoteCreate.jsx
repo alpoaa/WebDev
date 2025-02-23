@@ -1,39 +1,49 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useField } from '../hooks'
 
 import Header from './Header'
 
-const AnecdoteCreate = ({ creteNew }) => {
-    const [content, setContent] = useState('')
-    const [author, setAuthor] = useState('')
-    const [info, setInfo] = useState('')
-
+const AnecdoteCreate = ({ createNew }) => {
+    const content = useField('text')
+    const author = useField('text')
+    const info = useField('text')
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        creteNew({ content, author, info, votes: 0 })
-        setContent('')
-        setAuthor('')
-        setInfo('')
+        const newObj = {
+            content: content.value,
+            author: author.value,
+            info: info.value,
+            votes: 0
+        }
+        createNew(newObj)
     }
 
+    const resetValues = (event) => {
+        event.preventDefault()
+        content.onReset()
+        author.onReset()
+        info.onReset()
+    }
+ 
     return (
         <div>
             <Header text='Create a new anecdote' />
             <form onSubmit={handleSubmit}>
                 <div>
                     <p>Content</p>
-                    <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+                    <input {...content} />
                 </div>
                 <div>
                     <p>Author</p>
-                    <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+                    <input {...author} />
                 </div>
                 <div>
                     <p>URL for more info</p>
-                    <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+                    <input {...info} />
                 </div>
                 <button type='submit'>Create</button>
+                <button onClick={resetValues}>Reset</button>
             </form>
         </div>
     )
