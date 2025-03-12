@@ -1,7 +1,6 @@
 const Footer = () => {
     return (
-        <div>
-            <hr />
+        <div className="container bg-warning p-3">
             <p>Application created by Aleksi Aalto</p>
         </div>
     )

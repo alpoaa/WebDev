@@ -3,6 +3,9 @@ import Header from './Header'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { blogsLike, blogComment } from '../reducers/blogsReducer'
+import { signOut } from '../reducers/loggedUserReducer'
+import { sendNotification } from '../reducers/notificationReducer'
+import { Row, Col, Button, Form, ListGroup } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
     const [comment, setComment] = useState('')
@@ -11,8 +14,14 @@ const Blog = ({ blog }) => {
 
     const handleClickLike = () => {
         const updatedBlog = { ...blog, likes: blog.likes + 1 }
-        //TODO: try-catch block
-        dispatch(blogsLike(updatedBlog, loggedUser.token))
+
+        try {
+            dispatch(blogsLike(updatedBlog, loggedUser.token))
+            dispatch(sendNotification('Liked blog!'))
+        } catch (exception) {
+            dispatch(sendNotification(`${exception.response.data.error}`))
+            dispatch(signOut())
+        }
     }
 
     const handleChangeComment = (event) => setComment(event.target.value)
@@ -20,36 +29,60 @@ const Blog = ({ blog }) => {
     const handleClickComment = (event) => {
         event.preventDefault()
 
-        const newCommentObj = { comment }
-        dispatch(blogComment(newCommentObj, blog.id, loggedUser.token))
-        setComment('')
+        try {
+            const newCommentObj = { comment }
+            dispatch(blogComment(newCommentObj, blog.id, loggedUser.token))
+            dispatch(sendNotification(`Added comment, ${comment} to blog!`))
+            setComment('')
+        } catch (exception) {
+            dispatch(sendNotification(`${exception.response.data.error}`))
+            dispatch(signOut())
+        }
     }
 
     return (
-        <div>
-            <Header message={`${blog.title} by ${blog.author}`} />
-            <p>{blog.url}</p>
-            <p>Added by: {blog.user.name}</p>
-            <p>Has {blog.likes} likes</p>
-            <button onClick={handleClickLike}>Like</button>
-            <div>
-                <h5>Comments</h5>
-                <ul>
-                    {blog.comments.map((comment) => (
-                        <li key={comment.id}>{comment.comment}</li>
-                    ))}
-                </ul>
-
-                <form onSubmit={handleClickComment}>
-                    <input
-                        type="text"
-                        value={comment}
-                        onChange={handleChangeComment}
-                        placeholder="New Comment"
-                    />
-                    <button type="submit">Add comment</button>
-                </form>
-            </div>
+        <div className="container bg-light p-3">
+            <Row>
+                <Col sm={8}>
+                    <Header message={`${blog.title} by ${blog.author}`} />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <p>Url: {blog.url}</p>
+                    <p>Added by: {blog.user.name}</p>
+                    <p>Has {blog.likes} likes</p>
+                    <Button onClick={handleClickLike}>Like</Button>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={4}>
+                    <h5 className="mt-2">Comments</h5>
+                    <ListGroup as="ul">
+                        {blog.comments.map((comment) => (
+                            <ListGroup.Item key={comment.id} as="li">
+                                {comment.comment}
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                </Col>
+                <Col sm={8}>
+                    <Form onSubmit={handleClickComment} className="mt-2">
+                        <Form.Group>
+                            <Form.Label>Add new comment:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="comment"
+                                value={comment}
+                                onChange={handleChangeComment}
+                            />
+                            <Button type="submit" className="mt-3">
+                                Add comment
+                            </Button>
+                        </Form.Group>
+                    </Form>
+                </Col>
+            </Row>
         </div>
     )
 }

@@ -1,7 +1,10 @@
+import { Button, Form } from 'react-bootstrap'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { blogsCreate } from '../reducers/blogsReducer'
 import { sendNotification } from '../reducers/notificationReducer'
+import { signOut } from '../reducers/loggedUserReducer'
+import Header from './Header'
 
 const CreateBlog = () => {
     const loggedUser = useSelector((state) => state.loggedUser)
@@ -20,58 +23,66 @@ const CreateBlog = () => {
     const createNew = async (event) => {
         event.preventDefault()
 
-        const newBlogObj = { title, author, url, likes }
-        //TODO: try-catch -> if creating fails, logout
-        dispatch(blogsCreate(newBlogObj, loggedUser.token))
-        dispatch(sendNotification(`Created blog ${title} by ${author}!`))
+        try {
+            const newBlogObj = { title, author, url, likes }
 
-        setTitle('')
-        setAuthor('')
-        setUrl('')
-        setLikes(0)
+            dispatch(blogsCreate(newBlogObj, loggedUser))
+            dispatch(sendNotification(`Created blog ${title} by ${author}!`))
+            setTitle('')
+            setAuthor('')
+            setUrl('')
+            setLikes(0)
+        } catch (exception) {
+            dispatch(sendNotification(`${exception.response.data.error}`))
+            dispatch(signOut())
+        }
     }
 
     return (
-        <div>
-            <form onSubmit={createNew}>
-                <div>
-                    <p>Title</p>
-                    <input
+        <div className="container bg-light p-3">
+            <Header message="Create a new blog" />
+            <Form onSubmit={createNew}>
+                <Form.Group>
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
                         type="text"
-                        value={title}
+                        name="title"
                         onChange={handleChangeTitle}
-                        placeholder="Title"
+                        value={title}
                     />
-                </div>
-                <div>
-                    <p>Author</p>
-                    <input
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Author</Form.Label>
+                    <Form.Control
                         type="text"
-                        value={author}
+                        name="author"
                         onChange={handleChangeAuthor}
-                        placeholder="Author"
+                        value={author}
                     />
-                </div>
-                <div>
-                    <p>Url</p>
-                    <input
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Url</Form.Label>
+                    <Form.Control
                         type="text"
-                        value={url}
+                        name="url"
                         onChange={handleChangeUrl}
-                        placeholder="URL"
+                        value={url}
                     />
-                </div>
-                <div>
-                    <p>Likes</p>
-                    <input
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Likes</Form.Label>
+                    <Form.Control
                         type="number"
-                        value={likes}
+                        min="0"
+                        name="likes"
                         onChange={handleChangeLikes}
-                        placeholder="Likes"
+                        value={likes}
                     />
-                </div>
-                <button type="submit">Create</button>
-            </form>
+                </Form.Group>
+                <Button variant="primary" type="submit" className="mt-3">
+                    Create
+                </Button>
+            </Form>
         </div>
     )
 }

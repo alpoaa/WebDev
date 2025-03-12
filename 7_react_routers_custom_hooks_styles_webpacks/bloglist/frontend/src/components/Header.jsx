@@ -4,9 +4,9 @@ const Header = ({ message }) => {
     if (!message) return null
 
     return (
-        <>
+        <div>
             <h3>{message}</h3>
-        </>
+        </div>
     )
 }
 

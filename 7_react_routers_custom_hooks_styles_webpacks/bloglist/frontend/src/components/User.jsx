@@ -1,18 +1,28 @@
 import PropTypes from 'prop-types'
+import { ListGroup } from 'react-bootstrap'
 import Header from './Header'
 
 const User = ({ user }) => {
     if (!user) return null
 
     return (
-        <div>
+        <div className="container bg-light p-3">
             <Header message={user.name} />
-            <p>Added blogs</p>
-            <ul>
+            <p>User added blogs</p>
+            <ListGroup as="ul">
                 {user.blogs.map((blog) => (
-                    <li key={blog.id}>{blog.title}</li>
+                    <ListGroup.Item
+                        as="li"
+                        key={blog.id}
+                        className="d-flex justify-content-between align-items-start"
+                    >
+                        <div className="ms-2 me-auto">
+                            <div className="fw-bold">{blog.title}</div>
+                            {blog.author}
+                        </div>
+                    </ListGroup.Item>
                 ))}
-            </ul>
+            </ListGroup>
         </div>
     )
 }

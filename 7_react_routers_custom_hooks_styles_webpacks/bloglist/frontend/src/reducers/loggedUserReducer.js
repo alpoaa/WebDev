@@ -1,11 +1,11 @@
-/* eslint-disable no-case-declarations */
+/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 
 const findLoggedUser = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
     if (loggedUserJSON) {
         const user = JSON.parse(loggedUserJSON)
-        //return user
+        return user
     }
 
     return null
@@ -34,7 +34,7 @@ const userSlice = createSlice({
 
 export const signIn = credentials => {
     return async dispatch => {
-        //window.localStorage.setItem('loggedAppUser', JSON.stringify(credentials))
+        window.localStorage.setItem('loggedAppUser', JSON.stringify(credentials))
         dispatch(userSet(credentials))
     }
 }

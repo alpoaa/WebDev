@@ -13,7 +13,8 @@ const getAll = async(token) => {
 }
 
 const getUser = async (userId, token) => {
-    const requestConfig = { headers: { Authorization: token } }
+    const bearerToken = `Bearer ${token}`
+    const requestConfig = { headers: { Authorization: bearerToken } }
     const response = await axios.get(`${baseUrl}/${userId}`, requestConfig)
     return response.data
 }

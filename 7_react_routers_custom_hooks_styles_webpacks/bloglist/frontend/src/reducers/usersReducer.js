@@ -7,6 +7,10 @@ const usersSlice = createSlice({
     reducers: {
         usersSetAll(state, action) {
             return action.payload
+        },
+        usersAddBlog(state, action) {
+            const currentUser = state.find(user => user.username === action.payload.username)
+            currentUser.blogs.push(action.payload.blog)
         }
     }
 })
@@ -18,5 +22,12 @@ export const usersInit = (loginCredentials) => {
     }
 }
 
-export const { usersSetAll } = usersSlice.actions
+export const usersAddBlogCreate = (loggedUser, blog) => {
+    return dispatch => {
+        const newBlogUserObj = { username: loggedUser.username, blog }
+        dispatch(usersAddBlog(newBlogUserObj))
+    }
+}
+
+export const { usersSetAll, usersAddBlog } = usersSlice.actions
 export default usersSlice.reducer
