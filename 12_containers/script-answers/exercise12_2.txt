@@ -1,0 +1,13 @@
+alpoaa@ubuntu-self-dev:~$ docker run -it ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+2726e237d1a3: Pull complete 
+Digest: sha256:1e622c5f073b4f6bfad6632f2616c7f59ef256e96fe78bf6a595d1dc4376ac02
+Status: Downloaded newer image for ubuntu:latest
+root@51ce5395f6e3:/# mkdir /usr/src/app
+root@51ce5395f6e3:/# cd /usr/src/app/
+root@51ce5395f6e3:/usr/src/app# touch index.js
+root@51ce5395f6e3:/usr/src/app# ls
+index.js
+root@51ce5395f6e3:~# exit
+exit

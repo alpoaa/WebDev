@@ -15,7 +15,7 @@ const App = () => {
 
         setTimeout(() => {
             setNotif(null);
-        }, 2000);
+        }, 7000);
     };
 
     return (

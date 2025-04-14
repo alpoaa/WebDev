@@ -7,7 +7,7 @@ import Header from "./Header";
 const NewBook = ({ sendNotif }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
-    const [published, setPublished] = useState("");
+    const [publishedStr, setPublishedStr] = useState("");
     const [genre, setGenre] = useState("");
     const [genres, setGenres] = useState([]);
 
@@ -23,12 +23,13 @@ const NewBook = ({ sendNotif }) => {
 
     const submit = async (event) => {
         event.preventDefault();
-
+        
+        let published = parseInt(publishedStr)
         createBook({ variables: { title, author, published, genres } });
 
         setTitle("");
         setAuthor("");
-        setPublished("");
+        setPublishedStr("");
         setGenre("");
         setGenres([]);
     };
@@ -40,7 +41,7 @@ const NewBook = ({ sendNotif }) => {
 
     const handleChangeTitle = (event) => setTitle(event.target.value);
     const handleChangeAuthor = (event) => setAuthor(event.target.value);
-    const handleChangePublished = (event) => setPublished(event.target.value);
+    const handleChangePublished = (event) => setPublishedStr(event.target.value);
     const handleChangeGenre = (event) => setGenre(event.target.value);
 
     return (
@@ -63,9 +64,8 @@ const NewBook = ({ sendNotif }) => {
                 </div>
                 <div>
                     <input
-                        type='number'
                         placeholder='Published'
-                        value={published}
+                        value={publishedStr}
                         onChange={handleChangePublished}
                     />
                 </div>

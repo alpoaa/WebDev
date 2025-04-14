@@ -7,6 +7,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 const client = new ApolloClient({
     uri: "http://localhost:4001",
     cache: new InMemoryCache(),
+    devtools: {
+        enabled: true
+    }
 });
 
 createRoot(document.getElementById("root")).render(
