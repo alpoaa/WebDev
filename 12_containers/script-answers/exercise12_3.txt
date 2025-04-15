@@ -1,0 +1,7 @@
+alpoaa@ubuntu-self-dev:~/Dev/FSMooc/WebDev/12_containers/script-answers$ docker start -i bold_perlman 
+root@51ce5395f6e3:/# cd usr/src/app
+root@51ce5395f6e3:/usr/src/app# ls
+index.js
+root@51ce5395f6e3:/usr/src/app# nano index.js
+console.log('Hello World')
+root@51ce5395f6e3:/usr/src/app#  
