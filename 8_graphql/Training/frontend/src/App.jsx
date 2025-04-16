@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useApolloClient, useQuery } from "@apollo/client";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import PhoneForm from "./components/PhoneForm";
+import LoginForm from "./components/LoginForm";
 import { ALL_PERSONS } from "./util/queries";
 
 const Notify = ({ errorMessage }) => {
@@ -21,15 +22,14 @@ const Notify = ({ errorMessage }) => {
 
 const App = () => {
     const [errorMessage, setErrorMessage] = useState(null);
+    const [token, setToken] = useState(null)
 
     //Polling every 2sec the interface
     const result = useQuery(ALL_PERSONS, {
         pollInterval: 2000,
     });
 
-    if (result.loading) {
-        return <div>loading...</div>;
-    }
+    const client = useApolloClient()
 
     const notify = (message) => {
         setErrorMessage(message);
@@ -38,9 +38,30 @@ const App = () => {
         }, 5000);
     };
 
+    if (result.loading) {
+        return <div>loading...</div>;
+    }
+
+    const logout = () => {
+        setToken(null)
+        localStorage.clear()
+        client.resetStore()
+    }
+
+    if (!token) {
+        return (
+            <>
+                <Notify errorMessage={errorMessage} />
+                <h2>Login</h2>
+                <LoginForm setError={notify} setToken={setToken} />
+            </>
+        )
+    }
+
     return (
         <>
             <Notify errorMessage={errorMessage} />
+            <button onClick={logout}>Logout</button>
             <Persons persons={result.data.allPersons} />
             <PersonForm setError={notify} />
             <PhoneForm setError={notify} />

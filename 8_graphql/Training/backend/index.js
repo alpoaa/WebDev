@@ -4,7 +4,6 @@ const { v1: uuid } = require('uuid')
 const { GraphQLError } = require('graphql')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
-
 const Person = require('./schemas/person')
 const User = require('./schemas/user')
 
@@ -227,6 +226,9 @@ startStandaloneServer(server, {
       const currentUser = await User.findById(decodedToken.id).populate('friends')
       return { currentUser }
     }
+  },
+  cors: {
+    origin: `http://localhost:${process.env.PORT}`
   }
 }).then(({ url }) => {
   console.log(`Server ready at ${url}`)
