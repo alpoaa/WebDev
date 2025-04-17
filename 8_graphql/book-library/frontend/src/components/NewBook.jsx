@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOOK, ALL_BOOKS } from "../queries/books";
+import { CREATE_BOOK, ALL_BOOKS } from "../graphql/books";
+import { ALL_AUTHORS } from "../graphql/authors";
 
 import Header from "./Header";
 
@@ -12,16 +13,19 @@ const NewBook = ({ sendNotif }) => {
     const [genres, setGenres] = useState([]);
 
     const [createBook] = useMutation(CREATE_BOOK, {
-        refetchQueries: [{ query: ALL_BOOKS }],
+        refetchQueries: [
+            { query: ALL_BOOKS },
+            { query: ALL_AUTHORS}
+        ],
         onError: (error) => {
             const messages = error.graphQLErrors
                 .map((e) => e.message)
                 .join("\n");
             sendNotif(messages);
-        },
+        }
     });
 
-    const submit = async (event) => {
+    const submit = (event) => {
         event.preventDefault();
         
         let published = parseInt(publishedStr)

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import Select from "react-select";
-import { ALL_AUTHORS, UPDATE_AUTHOR_BIRTHYEAR } from "../queries/authors";
+import { ALL_AUTHORS, UPDATE_AUTHOR_BIRTHYEAR } from "../graphql/authors";
+import { types } from "../util/formDataTypes"
 
 import Header from "./Header";
+import FormData from "./FormData";
 
 const Authors = ({ sendNotif }) => {
     const [updateAuthor, setUpdateAuthor] = useState(null)
@@ -46,24 +48,7 @@ const Authors = ({ sendNotif }) => {
     return (
         <>
             <Header text='Authors' />
-            <div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            <th>Born</th>
-                            <th>Books</th>
-                        </tr>
-                        {authors.map((a) => (
-                            <tr key={a.id}>
-                                <td>{a.name}</td>
-                                <td>{a.born}</td>
-                                <td>{a.bookCount}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <FormData data={authors} type={types.author}/>
             <div>
                 <Header text='Update birthyear' />
                 <Select defaultValue={updateAuthor} onChange={setUpdateAuthor} options={authorOptions} />
