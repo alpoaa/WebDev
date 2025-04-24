@@ -2,19 +2,14 @@ const { ApolloServer } = require('@apollo/server')
 const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
 const { expressMiddleware } = require('@apollo/server/express4')
 const { makeExecutableSchema } = require('@graphql-tools/schema')
-
 const { WebSocketServer } = require('ws')
 const { useServer } = require('graphql-ws/lib/use/ws')
-
 const http = require('http')
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
-
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
-mongoose.set('strictQuery', false)
-const Person = require('./schemas/person')
+
 const User = require('./schemas/user')
 
 const typeDefs = require('./graph/definitions')
@@ -25,7 +20,7 @@ require('dotenv').config()
 const MONGODB_URI = process.env.MONGODB_URI
 
 console.log('connecting to', MONGODB_URI)
-
+mongoose.set('strictQuery', false)
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('connected to MongoDB')

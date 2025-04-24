@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOOK, ALL_BOOKS } from "../graphql/books";
+import { CREATE_BOOK, ALL_BOOKS, BOOK_ADDED } from "../graphql/books";
 import { ALL_AUTHORS } from "../graphql/authors";
 
 import Header from "./Header";
@@ -24,6 +24,8 @@ const NewBook = ({ sendNotif }) => {
             sendNotif(messages);
         }
     });
+
+    
 
     const submit = (event) => {
         event.preventDefault();

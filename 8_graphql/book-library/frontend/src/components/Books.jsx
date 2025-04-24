@@ -11,9 +11,7 @@ import { types } from "../util/formDataTypes"
 const Books = ({ sendNotif }) => {
     const [genreFilter, setGenreFilter] = useState(null)
     const [books, setBooks] = useState([])
-    const { loading, data, refetch } = useQuery(ALL_BOOKS, {
-        pollInterval: 3000
-    }); //queryResult
+    const { loading, data, refetch } = useQuery(ALL_BOOKS); //queryResult
     const { loading: genreLoading, data: genreData } = useQuery(FIND_BOOK_GENRE, {
         variables: {
             genre: genreFilter

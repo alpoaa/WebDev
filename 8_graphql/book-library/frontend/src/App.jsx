@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { useApolloClient } from "@apollo/client"
+import { useApolloClient, useSubscription } from "@apollo/client"
 
 import Home from "./components/Home";
 import Notification from "./components/Notification";
@@ -9,10 +9,19 @@ import Authors from "./components/Authors";
 import NewBook from "./components/NewBook";
 import Recommendations from "./components/Recommendations";
 
+import { ALL_BOOKS, BOOK_ADDED } from "./graphql/books";
+
 const App = () => {
     const [token, setToken] = useState(null)
     const [notif, setNotif] = useState(null)
     const apolloClient = useApolloClient()
+
+    useSubscription(BOOK_ADDED, {
+        onData: ({ data }) => {
+            const addedBook = data.data.bookAdded
+            sendNotification(`Addded book ${addedBook.title}`)
+        }
+    })
 
     if (!token && localStorage.getItem('user-token')) {
         setToken(localStorage.getItem('user-token'))
