@@ -33,3 +33,4 @@ tests-examples
 *.sw?
 .DS_Store
 .env
+*mongo_data/
