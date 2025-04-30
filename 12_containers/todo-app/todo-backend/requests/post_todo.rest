@@ -2,6 +2,6 @@ POST http://localhost:3000/todos
 Content-Type: application/json
 
 {
-    "text": "Send another request through VS code",
+    "text": "Send third request through VS code",
     "done": false
 }
