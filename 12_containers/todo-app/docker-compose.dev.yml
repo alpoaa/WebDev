@@ -1,21 +1,23 @@
 services:
   app:
-    image: hello-front-dev
+    image: todo-frontend-dev
     build: 
-      context: .
+      context: ./todo-frontend/
       dockerfile: dev.Dockerfile
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3000
     volumes:
-      - ./:/usr/src/app
+      - ./todo-frontend/:/usr/src/app
     ports:
       - 5173:5173
-    container_name: hello-front-dev
-  
+    container_name: todo-frontend-dev
+
   nginx:
     image: nginx:1.20.1
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
-    container_name: reverse-proxy
+    container_name: reverse-proxy-dev
     depends_on:
       - app

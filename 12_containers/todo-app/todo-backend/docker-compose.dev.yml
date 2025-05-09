@@ -1,6 +1,6 @@
 services:
   server:
-    image: todo-backend
+    image: todo-backend-dev
     build: 
       context: .
       dockerfile: dev.Dockerfile
@@ -14,7 +14,6 @@ services:
     depends_on:
       - mongo
       - redis
-
   mongo:
     image: init-mongo
     ports:
