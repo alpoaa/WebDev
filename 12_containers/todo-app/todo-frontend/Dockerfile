@@ -1,11 +1,6 @@
-FROM node:20 AS base-node
+FROM node:20 AS test
 
 WORKDIR /usr/src/app
-
-
-FROM base-node AS test
-
-ENV VITE_BACKEND_URL=http://localhost:3000
 
 COPY . .
 
@@ -14,9 +9,11 @@ RUN npm ci --include=dev
 CMD ["npm", "run", "test"]
 
 
-FROM base-node AS build-node
+FROM node:20 AS build-node
 
-ENV VITE_BACKEND_URL=http://localhost:3000
+WORKDIR /usr/src/app
+
+ENV VITE_BACKEND_URL="http://localhost:8080/api"
 
 COPY . .
 
@@ -25,9 +22,6 @@ RUN npm ci
 RUN npm run build
 
 
-FROM nginx:1.28-alpine
+FROM nginx:1.20.1
 
 COPY --from=build-node /usr/src/app/dist /usr/share/nginx/html
-
-
-
