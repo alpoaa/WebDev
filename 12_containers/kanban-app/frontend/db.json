@@ -1,0 +1,58 @@
+{
+    "columns": [
+        {
+            "id": 1,
+            "title": "Todo"
+        },
+        {
+            "id": 2,
+            "title": "Started"
+        },
+        {
+            "id": 3,
+            "title": "Waiting"
+        },
+        {
+            "id": 4,
+            "title": "Completed"
+        },
+        {
+            "id": 5,
+            "title": "Cancel"
+        }
+    ],
+    "tasks": [
+        {
+            "id": 1,
+            "columnId": 1,
+            "task": "Call electrician",
+            "description": "Getting light in the bathroom",
+            "assigned": "",
+            "dueDate": "10.03.2025"
+        },
+        {
+            "id": 2,
+            "columnId": 1,
+            "task": "Call carpenter",
+            "description": "Kitchen counter tops",
+            "assigned": "",
+            "dueDate": "10.03.2025"
+        },
+        {
+            "id": 3,
+            "columnId": 1,
+            "task": "Setup a meeting with site manager",
+            "description": "Relating to applying correct permits",
+            "assigned": "",
+            "dueDate": "10.03.2025"
+        },
+        {
+            "id": 4,
+            "columnId": 1,
+            "task": "Get tools from store",
+            "description": "Atleast screws (M8), hammer, sledgehammer, drill and circular saw",
+            "assigned": "",
+            "dueDate": "10.03.2025"
+        }
+    ]
+}
