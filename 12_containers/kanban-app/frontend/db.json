@@ -1,58 +1,62 @@
 {
-    "columns": [
-        {
-            "id": 1,
-            "title": "Todo"
-        },
-        {
-            "id": 2,
-            "title": "Started"
-        },
-        {
-            "id": 3,
-            "title": "Waiting"
-        },
-        {
-            "id": 4,
-            "title": "Completed"
-        },
-        {
-            "id": 5,
-            "title": "Cancel"
-        }
-    ],
-    "tasks": [
-        {
-            "id": 1,
-            "columnId": 1,
-            "task": "Call electrician",
-            "description": "Getting light in the bathroom",
-            "assigned": "",
-            "dueDate": "10.03.2025"
-        },
-        {
-            "id": 2,
-            "columnId": 1,
-            "task": "Call carpenter",
-            "description": "Kitchen counter tops",
-            "assigned": "",
-            "dueDate": "10.03.2025"
-        },
-        {
-            "id": 3,
-            "columnId": 1,
-            "task": "Setup a meeting with site manager",
-            "description": "Relating to applying correct permits",
-            "assigned": "",
-            "dueDate": "10.03.2025"
-        },
-        {
-            "id": 4,
-            "columnId": 1,
-            "task": "Get tools from store",
-            "description": "Atleast screws (M8), hammer, sledgehammer, drill and circular saw",
-            "assigned": "",
-            "dueDate": "10.03.2025"
-        }
-    ]
+  "columns": [
+    {
+      "id": "21a4",
+      "title": "Todo"
+    },
+    {
+      "id": "6232",
+      "title": "Started"
+    },
+    {
+      "id": "c8b6",
+      "title": "Completed"
+    },
+    {
+      "title": "Ca",
+      "id": "c0c4"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1cd3",
+      "columnId": "21a4",
+      "task": "Vaihdettu",
+      "description": "Kanssa",
+      "assigned": "Testi",
+      "dueDate": "15.08.2026"
+    },
+    {
+      "id": "2ed1",
+      "columnId": "21a4",
+      "task": "Call carpenter",
+      "description": "Kitchen counter tops",
+      "assigned": "",
+      "dueDate": "10.03.2025"
+    },
+    {
+      "id": "3vcd",
+      "columnId": "21a4",
+      "task": "Setup a meeting with site manager",
+      "description": "Relating to applying correct permits",
+      "assigned": "",
+      "dueDate": "10.03.2025"
+    },
+    {
+      "id": "4tr3",
+      "columnId": "6232",
+      "task": "Get tools from store",
+      "description": "Atleast screws (M8), hammer, sledgehammer, drill and circular saw",
+      "assigned": "",
+      "dueDate": "10.03.2025"
+    },
+    {
+      "id": "88ee",
+      "columnId": null,
+      "task": "New task",
+      "dueDate": "15.06.2025",
+      "assigned": "",
+      "description": ""
+    }
+  ]
 }

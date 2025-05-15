@@ -1,4 +1,5 @@
 import axios from "axios"
+import type { ColumnId, NewColumn } from "../types/column"
 
 const baseUrl = 'http://localhost:3001/columns'
 
@@ -7,22 +8,22 @@ const getAllColumns = async() => {
     return response.data
 }
 
-const getColumn = async(columnId) => {
+const getColumn = async(columnId: ColumnId) => {
     const response = await axios.get(`${baseUrl}/${columnId}`)
     return response.data
 }
 
-const createColumn = async(newColumnObj) => {
+const createColumn = async(newColumnObj: NewColumn) => {
     const response = await axios.post(baseUrl, newColumnObj)
     return response.data
 }
 
-const updateColumn = async(updatedColumnObj, columnId) => {
+const updateColumn = async(updatedColumnObj: NewColumn, columnId: ColumnId) => {
     const response = await axios.put(`${baseUrl}/${columnId}`, updatedColumnObj)
     return response.data
 }
 
-const deleteColumn = async(columnId) => {
+const deleteColumn = async(columnId: ColumnId) => {
     const response = await axios.delete(`${baseUrl}/${columnId}`)
     return response.data
 }

@@ -51,7 +51,7 @@ const ColumnContainer = ({ column, deleteColumn, updateColumn, createTask, tasks
             <div onClick={() => setEditMode(true)} className="bg-yellow-300 text-md cursor-grab rounded-md rounded-b-none font-bold p-3">
                 <div className="flex gap-4 justify-between">
                     <div className="flex justify-center items-center text-sm rounded-full">
-                        0
+                        {tasks.filter(task => task.columnId === column.id).length}
                     </div>
                     {!editMode && column.title}
                     {editMode && <input autoFocus onBlur={() => setEditMode(false)} value={column.title} onChange={(e) => updateColumn(column.id, e.target.value)} className="p-2"/>}

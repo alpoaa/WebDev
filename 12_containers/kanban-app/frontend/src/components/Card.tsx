@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 
@@ -42,7 +42,8 @@ const Card = ({ task, deleteTask, updateTask }: {
 
     const toggleEditMode = () => setEditMode((prev) => !prev)
 
-    const submitUpdateTask = () => {
+    const submitUpdateTask = (event: FormEvent) => {
+        event.preventDefault()
         const [year, month, day] = valueDueDate.split("-")
         let dueDate = ''
 
