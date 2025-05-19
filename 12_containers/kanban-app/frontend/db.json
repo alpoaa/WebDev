@@ -11,21 +11,9 @@
     {
       "id": "c8b6",
       "title": "Completed"
-    },
-    {
-      "title": "Ca",
-      "id": "c0c4"
     }
   ],
   "tasks": [
-    {
-      "id": "1cd3",
-      "columnId": "21a4",
-      "task": "Vaihdettu",
-      "description": "Kanssa",
-      "assigned": "Testi",
-      "dueDate": "15.08.2026"
-    },
     {
       "id": "2ed1",
       "columnId": "21a4",
@@ -36,8 +24,8 @@
     },
     {
       "id": "3vcd",
-      "columnId": "21a4",
-      "task": "Setup a meeting with site manager",
+      "columnId": "6232",
+      "task": "Setup a meeting wit manager",
       "description": "Relating to applying correct permits",
       "assigned": "",
       "dueDate": "10.03.2025"
@@ -51,10 +39,34 @@
       "dueDate": "10.03.2025"
     },
     {
-      "id": "88ee",
-      "columnId": null,
+      "id": "f3f1",
+      "columnId": "7d42",
       "task": "New task",
-      "dueDate": "15.06.2025",
+      "dueDate": "16.06.2025",
+      "assigned": "",
+      "description": ""
+    },
+    {
+      "id": "eb3e",
+      "columnId": "c8b6",
+      "task": "New task",
+      "dueDate": "19.06.2025",
+      "assigned": "",
+      "description": ""
+    },
+    {
+      "id": "f4f1",
+      "columnId": "21a4",
+      "task": "New task",
+      "dueDate": "19.06.2025",
+      "assigned": "",
+      "description": ""
+    },
+    {
+      "id": "8b5f",
+      "columnId": "21a4",
+      "task": "New task",
+      "dueDate": "19.06.2025",
       "assigned": "",
       "description": ""
     }

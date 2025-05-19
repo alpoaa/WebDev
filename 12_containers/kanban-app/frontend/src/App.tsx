@@ -17,21 +17,24 @@ const App = () => {
   const [tasks, setTasks] = useState<Tasks>([])
   const [notification, setNotification] = useState('')
   const [notificationType, setNotificationType] = useState<NotificationType>(null)
-
+  
   useEffect(() => {
-    try {
-      columnService
-      .getAllColumns()
-      .then(data => {
-        if (data) {
-          setColumns(data)
-        }
-      })
-      .catch(exception => {
-        sendNotification(exception, 'error')
-      })
-
-      taskService
+    try { 
+      columnService //http:localhost:3001/columns
+        .getAllColumns()
+        .then(data => {
+          if (data) {
+            setColumns(data)
+          }
+        })
+        .catch(exception => {
+          sendNotification(exception, 'error')
+        })
+      } catch (exception) {
+        sendNotification(`${exception}`, 'error')
+      }
+    
+    taskService //http:localhost:3001/tasks
         .getAllTasks()
         .then(data => {
           if (data) {
@@ -41,13 +44,8 @@ const App = () => {
         .catch(exception => {
           sendNotification(exception, 'error')
         })
-    } catch (exception) {
-      sendNotification(`${exception}`, 'error')
-    }
-    
   }, [])
-
-
+  
   const sendNotification = (message: string, type: NotificationType) => {
     setNotification(message)
     setNotificationType(type)
@@ -63,7 +61,6 @@ const App = () => {
       const newColumnObj: NewColumn = { title: 'New Column' }
       const createdColumn: Column = await columnService.createColumn(newColumnObj)
       setColumns(columns.concat(createdColumn))
-
     } catch (exception ) {
       sendNotification(`Error raised while trying to create new column. ${exception}`, 'error')
     }
@@ -73,7 +70,7 @@ const App = () => {
     try {
       const updateColumnObj: NewColumn = { title }
       const updatedColumn: Column = await columnService.updateColumn(updateColumnObj, columnId)
-      const newColumns = columns.map(column => column.id === columnId ? {...column, title: updatedColumn.title } : column)
+      const newColumns = columns.map(column => column.id === columnId ? updatedColumn : column)
       setColumns(newColumns)
 
     } catch (exception) {
@@ -95,15 +92,14 @@ const App = () => {
       await columnService.deleteColumn(columnId)
       const newColumns = columns.filter(column => column.id !== columnId)
       setColumns(newColumns)
-
+      
       const tasksIdDelete = tasks.filter(task => task.columnId === columnId).map(task => task.id)
-
       for (const id of tasksIdDelete) {
-        console.log('id: ', id)
+        deleteTask(id)
       }
-
-      const newTasks = tasks.filter(task => task.columnId !== columnId)
-      setTasks(newTasks)
+      
+     const newTasks = tasks.filter(task => task.columnId !== columnId)
+     setTasks(newTasks)
 
     } catch (exception) {
       sendNotification(`Error raised while trying to delete column. ${exception}`, 'error')
@@ -148,7 +144,7 @@ const App = () => {
       }
 
       const updatedTask: Task = await taskService.updateTask(updateTask, task.id)
-      const newTasks = tasks.map(t => t.id === updatedTask.id ? updatedTask : t)
+      const newTasks = tasks.map(t => t.id === updateTask.id ? updatedTask : t)
       setTasks(newTasks)
   }
 
@@ -164,12 +160,13 @@ const App = () => {
 
           return arrayMove(tasks, activeIdx, activeIdx)
         })
-
+        
         const updatedTask = tasks.find(task => task.id === activeId)
-
+  
         if (updatedTask) {
           updateTask(updatedTask)
         }
+        
       }
     } else {
       // when task orders are changed inside same column 
@@ -190,8 +187,8 @@ const App = () => {
       const newTasks = tasks.filter(task => task.id !== taskId)
       setTasks(newTasks)
 
-    } catch (exception) {
-      sendNotification(`Error raised while trying to delete task. ${exception}`, 'error')
+    } catch {
+      sendNotification(`Error raised while trying to delete task. Task not exists in the database.`, 'error')
     }
   }
 
