@@ -1,30 +1,30 @@
 import axios from "axios"
-import type { Task, Id, NewTask } from "../types/task"
+import type { Task, TaskId, NewTask } from "../types/task"
 
-const baseUrl: string = 'http://localhost:3001/tasks'
+const baseUrl: string = import.meta.env.BACKEND_URL //'http://localhost:3000/api'
 
 const getAllTasks = async() => {
-    const response = await axios.get(baseUrl)
+    const response = await axios.get(`${baseUrl}/tasks`)
     return response.data
 }
 
-const getTask = async(taskId: Id) => {
-    const response = await axios.get(`${baseUrl}/${taskId}`)
+const getTask = async(taskId: TaskId) => {
+    const response = await axios.get(`${baseUrl}/tasks/${taskId}`)
     return response.data
 }
 
 const createTask = async(newTaskObj: NewTask) => {
-    const response = await axios.post(baseUrl, newTaskObj)
+    const response = await axios.post(`${baseUrl}/tasks`, newTaskObj)
     return response.data
 }
 
-const updateTask = async(updatedTaskObj: Task, taskId: Id) => {
-    const response = await axios.put(`${baseUrl}/${taskId}`, updatedTaskObj)
+const updateTask = async(updatedTaskObj: Task, taskId: TaskId) => {
+    const response = await axios.put(`${baseUrl}/tasks/${taskId}`, updatedTaskObj)
     return response.data
 }
 
-const deleteTask = async(taskId: Id) => {
-    const response = await axios.delete(`${baseUrl}/${taskId}`)
+const deleteTask = async(taskId: TaskId) => {
+    const response = await axios.delete(`${baseUrl}/tasks/${taskId}`)
     return response.data
 }
 
