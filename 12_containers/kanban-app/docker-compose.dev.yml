@@ -1,0 +1,37 @@
+services:
+  server:
+    image: "kanban-app-backend-dev"
+    build: 
+      context: ./backend/
+      dockerfile: dev.Dockerfile
+    container_name: "kanban-app-backend-dev"
+    volumes:
+      - ./backend/:/usr/src/app
+    ports:
+      - 3000:3000
+  app:
+    image: "kanban-app-frontend-dev"
+    build: 
+      context: ./frontend/
+      dockerfile: dev.Dockerfile
+    container_name: "kanban-app-frontend-dev"
+    volumes:
+      - ./frontend/:/usr/src/app
+    ports:
+      - 5173:5173
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3000/api
+    depends_on:
+      - server
+  web:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf/:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: kanban-app-reverse-proxy-dev
+    depends_on:
+      - server
+      - app
+
+  

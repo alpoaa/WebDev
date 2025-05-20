@@ -4,7 +4,7 @@ const Column = require('../models/column')
 const { default: mongoose } = require('mongoose')
 
 tasksRouter.get('/', async(req, res) => {
-    const tasks = await Task.find({}).populate('columnId', { title: 1 })
+    const tasks = await Task.find({})
     res.json(tasks)
 })
 

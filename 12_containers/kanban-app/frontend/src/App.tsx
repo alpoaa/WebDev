@@ -20,7 +20,7 @@ const App = () => {
   
   useEffect(() => {
     try { 
-      columnService //http:localhost:3001/columns
+      columnService
         .getAllColumns()
         .then(data => {
           if (data) {
@@ -34,7 +34,7 @@ const App = () => {
         sendNotification(`${exception}`, 'error')
       }
     
-    taskService //http:localhost:3001/tasks
+    taskService
         .getAllTasks()
         .then(data => {
           if (data) {

@@ -9,6 +9,8 @@ export default defineConfig({
     tailwindcss()
   ],
   server: {
+    host: true,
+    allowedHosts: ["app", "server"],
     watch: {
       ignored: ['**/db.json']
     }

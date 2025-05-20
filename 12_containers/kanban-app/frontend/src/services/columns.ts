@@ -1,7 +1,7 @@
 import axios from "axios"
 import type { ColumnId, NewColumn } from "../types/column"
 
-const baseUrl = import.meta.env.BACKEND_URL //'http://localhost:3000/api'
+const baseUrl =  import.meta.env.VITE_BACKEND_URL //'http://localhost:3000/api'
 
 const getAllColumns = async() => {
     const response = await axios.get(`${baseUrl}/columns`)

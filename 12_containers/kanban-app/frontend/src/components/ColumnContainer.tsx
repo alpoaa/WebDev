@@ -19,7 +19,6 @@ const ColumnContainer = ({ column, deleteColumn, updateColumn, createTask, tasks
     updateTask: UpdateTask
 
 }) => {
-
     const [editMode, setEditMode] = useState(false)
 
     const taskIds = useMemo(() => {

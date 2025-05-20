@@ -1,0 +1,7 @@
+#single files
+.dockerignore
+.gitignore
+Dockerfile
+
+#folders
+node_modules

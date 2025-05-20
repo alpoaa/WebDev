@@ -1,7 +1,7 @@
 import axios from "axios"
 import type { Task, TaskId, NewTask } from "../types/task"
 
-const baseUrl: string = import.meta.env.BACKEND_URL //'http://localhost:3000/api'
+const baseUrl: string = import.meta.env.VITE_BACKEND_URL //'http://localhost:3000/api'
 
 const getAllTasks = async() => {
     const response = await axios.get(`${baseUrl}/tasks`)
